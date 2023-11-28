@@ -4,8 +4,12 @@ import 'package:tiktok_clone/constants/sizes.dart';
 class FormButton extends StatelessWidget {
   final bool disabled;
   final void Function(BuildContext) onTapFunction;
+  final String text;
   const FormButton(
-      {super.key, required this.disabled, required this.onTapFunction});
+      {super.key,
+      required this.disabled,
+      required this.onTapFunction,
+      required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +34,8 @@ class FormButton extends StatelessWidget {
               color: disabled ? Colors.grey.shade400 : Colors.white,
               fontWeight: FontWeight.bold,
             ),
-            child: const Text(
-              "Next",
+            child: Text(
+              text,
               textAlign: TextAlign.center,
             ),
           ),

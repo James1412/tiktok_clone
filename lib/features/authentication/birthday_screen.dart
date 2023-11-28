@@ -4,6 +4,7 @@ import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/email_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
+import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
 
 class BirthdayScreen extends StatefulWidget {
   const BirthdayScreen({super.key});
@@ -31,7 +32,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
 
   void _onNextTap(context) {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => const EmailScreen()));
+        .push(MaterialPageRoute(builder: (context) => const InterestsScreen()));
   }
 
   void _setTextFieldDate(DateTime date) {
@@ -94,6 +95,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
             FormButton(
               disabled: false,
               onTapFunction: _onNextTap,
+              text: "Next",
             ),
           ],
         ),
