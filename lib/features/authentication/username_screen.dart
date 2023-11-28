@@ -26,6 +26,12 @@ class _UsernameScreenState extends State<UsernameScreen> {
   }
 
   @override
+  void dispose() {
+    _usernameController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
