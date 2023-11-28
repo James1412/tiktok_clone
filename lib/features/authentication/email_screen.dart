@@ -12,23 +12,23 @@ class EmailScreen extends StatefulWidget {
 }
 
 class _EmailScreenState extends State<EmailScreen> {
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
 
   String _email = "";
 
   @override
   void initState() {
     super.initState();
-    _usernameController.addListener(() {
+    _emailController.addListener(() {
       setState(() {
-        _email = _usernameController.text;
+        _email = _emailController.text;
       });
     });
   }
 
   @override
   void dispose() {
-    _usernameController.dispose();
+    _emailController.dispose();
     super.dispose();
   }
 
@@ -88,7 +88,7 @@ class _EmailScreenState extends State<EmailScreen> {
                 onEditingComplete: () => _onSubmit(context),
                 keyboardType: TextInputType.emailAddress,
                 autocorrect: false,
-                controller: _usernameController,
+                controller: _emailController,
                 decoration: InputDecoration(
                   hintText: "Email",
                   errorText: _isEmailValid(),
