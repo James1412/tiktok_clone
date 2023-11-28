@@ -15,7 +15,9 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
 
   void _onSubmitTap(BuildContext q) {
     if (_formKey.currentState != null) {
-      _formKey.currentState!.validate();
+      if (_formKey.currentState!.validate()) {
+        _formKey.currentState!.save();
+      }
     }
   }
 
@@ -39,8 +41,9 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                   hintText: "Email",
                 ),
                 validator: (value) {
-                  return "I don't like your email";
+                  return null;
                 },
+                onSaved: (newValue) => print(newValue),
               ),
               Gaps.v16,
               TextFormField(
@@ -48,8 +51,9 @@ class _LoginFormScreenState extends State<LoginFormScreen> {
                   hintText: "Password",
                 ),
                 validator: (value) {
-                  return "Wrong password";
+                  return null;
                 },
+                onSaved: (newValue) => print(newValue),
               ),
               Gaps.v28,
               FormButton(
