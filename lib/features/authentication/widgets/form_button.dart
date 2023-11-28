@@ -3,32 +3,37 @@ import 'package:tiktok_clone/constants/sizes.dart';
 
 class FormButton extends StatelessWidget {
   final bool disabled;
-
-  const FormButton({super.key, required this.disabled});
+  final void Function(BuildContext) onTapFunction;
+  const FormButton(
+      {super.key, required this.disabled, required this.onTapFunction});
 
   @override
   Widget build(BuildContext context) {
-    return FractionallySizedBox(
-      widthFactor: 1,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(
-          vertical: Sizes.size14,
-        ),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(Sizes.size5),
-          color:
-              disabled ? Colors.grey.shade300 : Theme.of(context).primaryColor,
-        ),
-        child: AnimatedDefaultTextStyle(
+    return GestureDetector(
+      onTap: () => onTapFunction(context),
+      child: FractionallySizedBox(
+        widthFactor: 1,
+        child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
-          style: TextStyle(
-            color: disabled ? Colors.grey.shade400 : Colors.white,
-            fontWeight: FontWeight.bold,
+          padding: const EdgeInsets.symmetric(
+            vertical: Sizes.size14,
           ),
-          child: const Text(
-            "Next",
-            textAlign: TextAlign.center,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(Sizes.size5),
+            color: disabled
+                ? Colors.grey.shade300
+                : Theme.of(context).primaryColor,
+          ),
+          child: AnimatedDefaultTextStyle(
+            duration: const Duration(milliseconds: 200),
+            style: TextStyle(
+              color: disabled ? Colors.grey.shade400 : Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+            child: const Text(
+              "Next",
+              textAlign: TextAlign.center,
+            ),
           ),
         ),
       ),
