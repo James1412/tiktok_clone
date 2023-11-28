@@ -84,16 +84,20 @@ class _UsernameScreenState extends State<UsernameScreen> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(Sizes.size5),
                   color: _username.isEmpty
-                      ? Colors.grey.shade400
+                      ? Colors.grey.shade300
                       : Theme.of(context).primaryColor,
                 ),
-                child: const Text(
-                  "Next",
+                child: AnimatedDefaultTextStyle(
+                  duration: const Duration(milliseconds: 200),
                   style: TextStyle(
-                    color: Colors.white,
+                    color:
+                        _username.isEmpty ? Colors.grey.shade400 : Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
-                  textAlign: TextAlign.center,
+                  child: const Text(
+                    "Next",
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ),
             ),
