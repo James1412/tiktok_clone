@@ -39,40 +39,23 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: screens[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onTap,
-        items: const [
-          BottomNavigationBarItem(
-            label: "Home",
-            tooltip: "Go Home",
-            icon: FaIcon(FontAwesomeIcons.house),
-            backgroundColor: Colors.amber,
-          ),
-          BottomNavigationBarItem(
-            label: "Search",
-            tooltip: "Search items",
-            icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-            backgroundColor: Colors.teal,
-          ),
-          BottomNavigationBarItem(
-            label: "Home",
-            tooltip: "Go Home",
-            icon: FaIcon(FontAwesomeIcons.house),
-            backgroundColor: Colors.pink,
-          ),
-          BottomNavigationBarItem(
-            label: "Search",
-            tooltip: "Search items",
-            icon: FaIcon(FontAwesomeIcons.magnifyingGlass),
-            backgroundColor: Colors.blue,
-          ),
-          BottomNavigationBarItem(
-            label: "Home",
-            tooltip: "Go Home",
-            icon: FaIcon(FontAwesomeIcons.house),
-            backgroundColor: Colors.deepPurple,
-          ),
+      bottomNavigationBar: NavigationBar(
+        labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+        selectedIndex: _selectedIndex,
+        onDestinationSelected: _onTap,
+        destinations: const [
+          NavigationDestination(
+              icon: FaIcon(
+                FontAwesomeIcons.house,
+                color: Colors.amber,
+              ),
+              label: "Home"),
+          NavigationDestination(
+              icon: FaIcon(
+                FontAwesomeIcons.magnifyingGlass,
+                color: Colors.teal,
+              ),
+              label: "Search"),
         ],
       ),
     );
