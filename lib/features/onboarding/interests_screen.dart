@@ -55,7 +55,8 @@ class InterestsScreen extends StatefulWidget {
 class _InterestsScreenState extends State<InterestsScreen> {
   final ScrollController _scrollController = ScrollController();
   bool _showTitle = false;
-  final List _selectedItems = [];
+  // ignore: prefer_final_fields
+  List _selectedItems = [];
   int _selection = 0;
 
   void onTap(item) {
