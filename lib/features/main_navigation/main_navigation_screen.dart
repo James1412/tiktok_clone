@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/main_navigation/stf_screen.dart';
 import 'package:tiktok_clone/features/main_navigation/widgets/nav_tab.dart';
 import 'package:tiktok_clone/features/main_navigation/widgets/post_video_button.dart';
+import 'package:tiktok_clone/features/videos/video_timeline_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -41,19 +41,19 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         children: [
           Offstage(
             offstage: _selectedIndex != 0,
-            child: const StfScreen(),
+            child: const VideoTimeLineScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 1,
-            child: const StfScreen(),
+            child: Container(),
           ),
           Offstage(
             offstage: _selectedIndex != 3,
-            child: const StfScreen(),
+            child: Container(),
           ),
           Offstage(
             offstage: _selectedIndex != 4,
-            child: const StfScreen(),
+            child: Container(),
           ),
         ],
       ),
@@ -70,7 +70,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               icon: FontAwesomeIcons.house,
               onTap: () => _onTap(0),
             ),
-            Gaps.h12,
+            Gaps.h14,
             NavTab(
               isSelected: _selectedIndex == 1,
               text: "Discover",
@@ -91,7 +91,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               icon: FontAwesomeIcons.message,
               onTap: () => _onTap(3),
             ),
-            Gaps.h12,
+            Gaps.h14,
             NavTab(
               isSelected: _selectedIndex == 4,
               text: "Profile",
