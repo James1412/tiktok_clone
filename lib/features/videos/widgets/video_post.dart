@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/videos/widgets/video_button.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -22,6 +23,7 @@ class _VideoPostState extends State<VideoPost>
   bool _isPaused = false;
   final Duration _animationDuration = const Duration(milliseconds: 200);
   late final AnimationController _animationController;
+  bool _seeMore = false;
 
   void _onVideoChange() {
     if (_videoPlayerController.value.isInitialized) {
@@ -34,6 +36,7 @@ class _VideoPostState extends State<VideoPost>
 
   void _initVideoPlayer() async {
     await _videoPlayerController.initialize();
+    await _videoPlayerController.setLooping(true);
     setState(() {});
     _videoPlayerController.addListener(_onVideoChange);
   }
@@ -126,6 +129,88 @@ class _VideoPostState extends State<VideoPost>
                   ],
                 ),
               ),
+            ),
+          ),
+          Positioned(
+            bottom: 50,
+            left: 20,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "@지강",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: Sizes.size16,
+                  ),
+                ),
+                Gaps.v8,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      _seeMore
+                          ? "This is nomadcoders lecture video\nThis is nomadcoders lecture video\nThis is nomadcoders lecture video\n"
+                          : "This is nomadcoders",
+                      style: const TextStyle(
+                        fontSize: Sizes.size12,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.white,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _seeMore = !_seeMore;
+                        });
+                      },
+                      child: Text(
+                        _seeMore ? "See less" : "... See more",
+                        style: const TextStyle(
+                          fontSize: Sizes.size12,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.white,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            bottom: 100,
+            right: 10,
+            child: Column(
+              children: [
+                CircleAvatar(
+                  backgroundColor: Theme.of(context).primaryColor,
+                  radius: 25,
+                  foregroundColor: Colors.white,
+                  foregroundImage: const NetworkImage(
+                    "https://avatars.githubusercontent.com/u/73318218?v=4",
+                  ),
+                  child: const Text(
+                    "지강",
+                  ),
+                ),
+                Gaps.v20,
+                const VideoButton(
+                  icon: FontAwesomeIcons.solidHeart,
+                  text: "2.9M",
+                ),
+                Gaps.v20,
+                const VideoButton(
+                  icon: FontAwesomeIcons.solidComment,
+                  text: "33K",
+                ),
+                Gaps.v20,
+                const VideoButton(
+                  icon: FontAwesomeIcons.share,
+                  text: "Share",
+                ),
+              ],
             ),
           ),
         ],
