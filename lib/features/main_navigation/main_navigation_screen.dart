@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/constants/gaps.dart';
+import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/main_navigation/stf_screen.dart';
 import 'package:tiktok_clone/features/main_navigation/widgets/nav_tab.dart';
+import 'package:tiktok_clone/features/main_navigation/widgets/post_video_button.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   const MainNavigationScreen({super.key});
@@ -18,6 +21,17 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  void _onPostVideoButtonTap() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => Container(
+          color: Colors.black,
+        ),
+        fullscreenDialog: true,
+      ),
+    );
   }
 
   @override
@@ -47,6 +61,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         color: Colors.black,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             NavTab(
               isSelected: _selectedIndex == 0,
@@ -55,6 +70,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               icon: FontAwesomeIcons.house,
               onTap: () => _onTap(0),
             ),
+            Gaps.h12,
             NavTab(
               isSelected: _selectedIndex == 1,
               text: "Discover",
@@ -62,6 +78,12 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               icon: FontAwesomeIcons.compass,
               onTap: () => _onTap(1),
             ),
+            Gaps.h24,
+            GestureDetector(
+              onTap: _onPostVideoButtonTap,
+              child: const PostVideoButton(),
+            ),
+            Gaps.h24,
             NavTab(
               isSelected: _selectedIndex == 3,
               text: "Inbox",
@@ -69,6 +91,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
               icon: FontAwesomeIcons.message,
               onTap: () => _onTap(3),
             ),
+            Gaps.h12,
             NavTab(
               isSelected: _selectedIndex == 4,
               text: "Profile",
