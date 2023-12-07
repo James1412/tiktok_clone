@@ -64,7 +64,9 @@ class _VideoPostState extends State<VideoPost>
   }
 
   void _onVisibilityChange(VisibilityInfo info) {
-    if (info.visibleFraction == 1 && !_videoPlayerController.value.isPlaying) {
+    if (info.visibleFraction == 1 &&
+        !_isPaused &&
+        !_videoPlayerController.value.isPlaying) {
       _videoPlayerController.play();
     }
   }
@@ -186,7 +188,7 @@ class _VideoPostState extends State<VideoPost>
               children: [
                 CircleAvatar(
                   backgroundColor: Theme.of(context).primaryColor,
-                  radius: 25,
+                  radius: 20,
                   foregroundColor: Colors.white,
                   foregroundImage: const NetworkImage(
                     "https://avatars.githubusercontent.com/u/73318218?v=4",
@@ -195,7 +197,7 @@ class _VideoPostState extends State<VideoPost>
                     "지강",
                   ),
                 ),
-                Gaps.v20,
+                Gaps.v32,
                 const VideoButton(
                   icon: FontAwesomeIcons.solidHeart,
                   text: "2.9M",
