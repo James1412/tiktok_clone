@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/videos/widgets/video_button.dart';
+import 'package:tiktok_clone/features/videos/widgets/video_comments.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -84,11 +85,16 @@ class _VideoPostState extends State<VideoPost>
     });
   }
 
-  void _onCommentsTap(BuildContext context) {
-    showModalBottomSheet(
+  void _onCommentsTap(BuildContext context) async {
+    if (_videoPlayerController.value.isPlaying) {
+      _togglePause();
+    }
+    await showModalBottomSheet(
       context: context,
-      builder: (context) => Container(),
+      backgroundColor: Colors.transparent,
+      builder: (context) => const VideoCommentsTab(),
     );
+    _togglePause();
   }
 
   @override
