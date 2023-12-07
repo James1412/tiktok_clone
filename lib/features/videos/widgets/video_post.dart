@@ -84,6 +84,13 @@ class _VideoPostState extends State<VideoPost>
     });
   }
 
+  void _onCommentsTap(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => Container(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return VisibilityDetector(
@@ -203,9 +210,12 @@ class _VideoPostState extends State<VideoPost>
                   text: "2.9M",
                 ),
                 Gaps.v20,
-                const VideoButton(
-                  icon: FontAwesomeIcons.solidComment,
-                  text: "33K",
+                GestureDetector(
+                  onTap: () => _onCommentsTap(context),
+                  child: const VideoButton(
+                    icon: FontAwesomeIcons.solidComment,
+                    text: "33K",
+                  ),
                 ),
                 Gaps.v20,
                 const VideoButton(
