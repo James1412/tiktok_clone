@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
+import 'package:tiktok_clone/features/discover/discover_screen.dart';
 import 'package:tiktok_clone/features/main_navigation/widgets/nav_tab.dart';
 import 'package:tiktok_clone/features/main_navigation/widgets/post_video_button.dart';
 import 'package:tiktok_clone/features/videos/video_timeline_screen.dart';
@@ -45,7 +46,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
           Offstage(
             offstage: _selectedIndex != 1,
-            child: Container(),
+            child: const DiscoverScreen(),
           ),
           Offstage(
             offstage: _selectedIndex != 3,
@@ -58,13 +59,15 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
         ],
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.black,
+        color: _selectedIndex == 0 ? Colors.black : Colors.white,
+        surfaceTintColor: _selectedIndex == 0 ? Colors.black : Colors.white,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             NavTab(
               isSelected: _selectedIndex == 0,
+              index: _selectedIndex,
               text: "Home",
               selectedIcon: FontAwesomeIcons.house,
               icon: FontAwesomeIcons.house,
@@ -73,6 +76,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             Gaps.h14,
             NavTab(
               isSelected: _selectedIndex == 1,
+              index: _selectedIndex,
               text: "Discover",
               selectedIcon: FontAwesomeIcons.solidCompass,
               icon: FontAwesomeIcons.compass,
@@ -81,11 +85,14 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             Gaps.h24,
             GestureDetector(
               onTap: _onPostVideoButtonTap,
-              child: const PostVideoButton(),
+              child: PostVideoButton(
+                inverted: _selectedIndex != 0,
+              ),
             ),
             Gaps.h24,
             NavTab(
               isSelected: _selectedIndex == 3,
+              index: _selectedIndex,
               text: "Inbox",
               selectedIcon: FontAwesomeIcons.solidMessage,
               icon: FontAwesomeIcons.message,
@@ -94,6 +101,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             Gaps.h14,
             NavTab(
               isSelected: _selectedIndex == 4,
+              index: _selectedIndex,
               text: "Profile",
               selectedIcon: FontAwesomeIcons.solidUser,
               icon: FontAwesomeIcons.user,
