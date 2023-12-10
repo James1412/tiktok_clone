@@ -94,7 +94,8 @@ class _VideoCommentsTabState extends State<VideoCommentsTab> {
                               ),
                               Gaps.v2,
                               const Text(
-                                  "That's not it. Ive seen the same thing, but also in a cave"),
+                                "That's not it. Ive seen the same thing, but also in a cave",
+                              ),
                             ],
                           ),
                         ),
