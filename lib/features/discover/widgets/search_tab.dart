@@ -45,7 +45,7 @@ class _DiscoverSearchTabState extends State<DiscoverSearchTab> {
         decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(
-                Sizes.size2,
+                Sizes.size10,
               ),
               borderSide: BorderSide.none,
             ),
