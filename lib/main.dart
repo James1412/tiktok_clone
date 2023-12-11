@@ -15,6 +15,9 @@ class TikTokApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "TikTok Clone",
       theme: ThemeData(
+        // Press and long press colors to transparent to have no splash effect
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: Color(0xFFE9435A),
         ),
