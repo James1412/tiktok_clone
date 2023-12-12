@@ -23,7 +23,12 @@ class InboxScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 1,
         shadowColor: Colors.black,
-        title: const Text("Inbox"),
+        title: const Text(
+          "Inbox",
+          style: TextStyle(
+            fontSize: Sizes.size18,
+          ),
+        ),
         actions: [
           IconButton(
             onPressed: _onDmPressed,

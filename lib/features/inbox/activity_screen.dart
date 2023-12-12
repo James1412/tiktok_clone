@@ -44,7 +44,7 @@ class _ActivityScreenState extends State<ActivityScreen>
 
   late final AnimationController _animationController = AnimationController(
     vsync: this,
-    duration: const Duration(milliseconds: 200),
+    duration: const Duration(milliseconds: 150),
   );
 
   late final Animation<double> _arrowAnimation = Tween(
@@ -83,15 +83,15 @@ class _ActivityScreenState extends State<ActivityScreen>
         title: GestureDetector(
           onTap: _toggleAnimations,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Gaps.h80,
               const Text(
                 "All activity",
                 style: TextStyle(
                   fontSize: Sizes.size16,
                 ),
               ),
-              Gaps.h2,
+              Gaps.h4,
               RotationTransition(
                 turns: _arrowAnimation,
                 child: const FaIcon(
