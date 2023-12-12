@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -32,10 +33,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
       body: ListView(
         children: [
-          Switch.adaptive(
-              value: _notification, onChanged: _onNotificationChanged),
-          Checkbox.adaptive(
-              value: _notification, onChanged: _onNotificationChanged),
           SwitchListTile.adaptive(
             value: _notification,
             onChanged: _onNotificationChanged,
@@ -97,6 +94,55 @@ class _SettingsScreenState extends State<SettingsScreen> {
               print(booking);
             },
             title: const Text("What is your birthday?"),
+          ),
+          ListTile(
+            title: const Text("Log out (IOS)"),
+            textColor: Colors.red,
+            onTap: () {
+              showCupertinoDialog(
+                context: context,
+                builder: (context) => CupertinoAlertDialog(
+                  title: const Text("Are you sure"),
+                  content: const Text("Please don't go"),
+                  actions: [
+                    CupertinoDialogAction(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: const Text("NO"),
+                    ),
+                    const CupertinoDialogAction(
+                      isDestructiveAction: true,
+                      child: Text("Yes"),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+          ListTile(
+            title: const Text("Log out (ANDROID)"),
+            textColor: Colors.red,
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  icon: const FaIcon(
+                    FontAwesomeIcons.skull,
+                  ),
+                  title: const Text("Are you sure"),
+                  content: const Text("Please don't go"),
+                  actions: [
+                    IconButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      icon: const FaIcon(FontAwesomeIcons.car),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text("Yes"),
+                    ),
+                  ],
+                ),
+              );
+            },
           ),
           const AboutListTile(),
         ],
