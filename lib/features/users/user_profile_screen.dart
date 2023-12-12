@@ -13,16 +13,19 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
     return CustomScrollView(
       slivers: [
         SliverAppBar(
+          snap: true,
+          floating: true,
+          stretch: true,
+          pinned: true,
           backgroundColor: Colors.teal,
           elevation: 1,
           collapsedHeight: 80,
           expandedHeight: 200,
-          floating: true,
-          stretch: true,
           flexibleSpace: FlexibleSpaceBar(
             stretchModes: const [
               StretchMode.blurBackground,
               StretchMode.zoomBackground,
+              StretchMode.fadeTitle,
             ],
             background: Image.asset(
               "assets/images/bibab.jpg",
@@ -31,6 +34,17 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             title: const Text("Hello!"),
           ),
         ),
+        SliverFixedExtentList(
+            delegate: SliverChildBuilderDelegate(
+                childCount: 50,
+                (context, index) => Container(
+                      color: Colors.amber[100 * (index % 9)],
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text("Item $index"),
+                      ),
+                    )),
+            itemExtent: 100),
       ],
     );
   }
