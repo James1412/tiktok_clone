@@ -2,8 +2,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
+
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  bool _notification = false;
+
+  void _onNotificationChanged(bool? newValue) {
+    if (newValue == null) return;
+    setState(() {
+      _notification = newValue;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +32,22 @@ class SettingsScreen extends StatelessWidget {
       ),
       body: ListView(
         children: [
+          Switch.adaptive(
+              value: _notification, onChanged: _onNotificationChanged),
+          Checkbox.adaptive(
+              value: _notification, onChanged: _onNotificationChanged),
+          SwitchListTile.adaptive(
+            value: _notification,
+            onChanged: _onNotificationChanged,
+            title: const Text("enable notification"),
+          ),
+          CheckboxListTile(
+            checkColor: Colors.white,
+            activeColor: Colors.black,
+            value: _notification,
+            onChanged: _onNotificationChanged,
+            title: const Text("Enable notifications"),
+          ),
           ListTile(
             onTap: () async {
               final date = await showDatePicker(
