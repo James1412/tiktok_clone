@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/videos/video_preview_screen.dart';
 
 class VideoRecordingScreen extends StatefulWidget {
   const VideoRecordingScreen({super.key});
@@ -42,6 +43,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
       ResolutionPreset.high,
     );
     await _cameraController.initialize();
+    await _cameraController.prepareForVideoRecording();
     _flashMode = _cameraController.value.flashMode;
   }
 
@@ -86,132 +88,155 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     setState(() {});
   }
 
-  void _startRecording(TapDownDetails _) {
+  Future<void> _startRecording(TapDownDetails _) async {
+    if (_cameraController.value.isRecordingVideo) {
+      return;
+    }
+    await _cameraController.startVideoRecording();
     _buttonAnimationController.forward();
     _progressAnimationController.forward();
   }
 
-  void _stopRecording() {
+  Future<void> _stopRecording() async {
+    if (!_cameraController.value.isRecordingVideo) {
+      return;
+    }
     _buttonAnimationController.reverse();
     _progressAnimationController.reset();
+    final video = await _cameraController.stopVideoRecording();
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => VideoPreviewScreen(video: video),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _cameraController.dispose();
+    _buttonAnimationController.dispose();
+    _progressAnimationController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black,
-        body: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: !_hasPermission || !_cameraController.value.isInitialized
-              ? const Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Initializing...",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: Sizes.size20,
-                      ),
+      backgroundColor: Colors.black,
+      body: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: !_hasPermission || !_cameraController.value.isInitialized
+            ? const Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Initializing...",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: Sizes.size20,
                     ),
-                    Gaps.v20,
-                    CircularProgressIndicator.adaptive(),
-                  ],
-                )
-              : Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Center(
-                      child: CameraPreview(
-                        _cameraController,
-                      ),
+                  ),
+                  Gaps.v20,
+                  CircularProgressIndicator.adaptive(),
+                ],
+              )
+            : Stack(
+                alignment: Alignment.center,
+                children: [
+                  Center(
+                    child: CameraPreview(
+                      _cameraController,
                     ),
-                    Positioned(
-                      top: Sizes.size96,
-                      right: Sizes.size32,
-                      child: Column(
-                        children: [
-                          IconButton(
-                            color: Colors.white,
-                            onPressed: _toggleSelfieMode,
-                            icon: const Icon(
-                              Icons.cameraswitch,
-                            ),
+                  ),
+                  Positioned(
+                    top: Sizes.size96,
+                    right: Sizes.size12,
+                    child: Column(
+                      children: [
+                        IconButton(
+                          color: Colors.white,
+                          onPressed: _toggleSelfieMode,
+                          icon: const Icon(
+                            Icons.cameraswitch,
                           ),
-                          Gaps.v10,
-                          IconButton(
-                            color: _flashMode == FlashMode.off
-                                ? Colors.amber.shade300
-                                : Colors.white,
-                            onPressed: () => _setFlashMode(FlashMode.off),
-                            icon: const Icon(
-                              Icons.flash_off_rounded,
-                            ),
+                        ),
+                        Gaps.v10,
+                        IconButton(
+                          color: _flashMode == FlashMode.off
+                              ? Colors.amber.shade300
+                              : Colors.white,
+                          onPressed: () => _setFlashMode(FlashMode.off),
+                          icon: const Icon(
+                            Icons.flash_off_rounded,
                           ),
-                          IconButton(
-                            color: _flashMode == FlashMode.always
-                                ? Colors.amber.shade300
-                                : Colors.white,
-                            onPressed: () => _setFlashMode(FlashMode.always),
-                            icon: const Icon(
-                              Icons.flash_on_rounded,
-                            ),
+                        ),
+                        IconButton(
+                          color: _flashMode == FlashMode.always
+                              ? Colors.amber.shade300
+                              : Colors.white,
+                          onPressed: () => _setFlashMode(FlashMode.always),
+                          icon: const Icon(
+                            Icons.flash_on_rounded,
                           ),
-                          IconButton(
-                            color: _flashMode == FlashMode.auto
-                                ? Colors.amber.shade300
-                                : Colors.white,
-                            onPressed: () => _setFlashMode(FlashMode.auto),
-                            icon: const Icon(
-                              Icons.flash_auto_rounded,
-                            ),
+                        ),
+                        IconButton(
+                          color: _flashMode == FlashMode.auto
+                              ? Colors.amber.shade300
+                              : Colors.white,
+                          onPressed: () => _setFlashMode(FlashMode.auto),
+                          icon: const Icon(
+                            Icons.flash_auto_rounded,
                           ),
-                          IconButton(
-                            color: _flashMode == FlashMode.torch
-                                ? Colors.amber.shade300
-                                : Colors.white,
-                            onPressed: () => _setFlashMode(FlashMode.torch),
-                            icon: const Icon(
-                              Icons.flashlight_on_rounded,
-                            ),
+                        ),
+                        IconButton(
+                          color: _flashMode == FlashMode.torch
+                              ? Colors.amber.shade300
+                              : Colors.white,
+                          onPressed: () => _setFlashMode(FlashMode.torch),
+                          icon: const Icon(
+                            Icons.flashlight_on_rounded,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    Positioned(
-                      bottom: Sizes.size96,
-                      child: GestureDetector(
-                        onTapDown: _startRecording,
-                        onTapUp: (detail) => _stopRecording(),
-                        child: ScaleTransition(
-                          scale: _buttonAnimation,
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              SizedBox(
-                                width: Sizes.size80,
-                                height: Sizes.size80,
-                                child: CircularProgressIndicator(
-                                  color: Colors.red,
-                                  strokeWidth: Sizes.size6,
-                                  value: _progressAnimationController.value,
-                                ),
+                  ),
+                  Positioned(
+                    bottom: Sizes.size96,
+                    child: GestureDetector(
+                      onTapDown: _startRecording,
+                      onTapUp: (detail) => _stopRecording(),
+                      child: ScaleTransition(
+                        scale: _buttonAnimation,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            SizedBox(
+                              width: Sizes.size80,
+                              height: Sizes.size80,
+                              child: CircularProgressIndicator(
+                                color: Colors.red,
+                                strokeWidth: Sizes.size6,
+                                value: _progressAnimationController.value,
                               ),
-                              Container(
-                                width: Sizes.size60,
-                                height: Sizes.size60,
-                                decoration: BoxDecoration(
-                                  color: Colors.red.shade500,
-                                  shape: BoxShape.circle,
-                                ),
+                            ),
+                            Container(
+                              width: Sizes.size60,
+                              height: Sizes.size60,
+                              decoration: BoxDecoration(
+                                color: Colors.red.shade500,
+                                shape: BoxShape.circle,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ],
-                ),
-        ));
+                  ),
+                ],
+              ),
+      ),
+    );
   }
 }
