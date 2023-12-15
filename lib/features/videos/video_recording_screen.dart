@@ -15,9 +15,10 @@ class VideoRecordingScreen extends StatefulWidget {
 }
 
 class _VideoRecordingScreenState extends State<VideoRecordingScreen>
-    with TickerProviderStateMixin {
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   bool _hasPermission = false;
   bool _isSelfieMode = false;
+
   late final AnimationController _buttonAnimationController =
       AnimationController(
     vsync: this,
@@ -68,6 +69,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
   void initState() {
     super.initState();
     initPermissions();
+    WidgetsBinding.instance.addObserver(this);
     _progressAnimationController.addListener(() {
       setState(() {});
     });
@@ -78,6 +80,22 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     });
   }
 
+  @override
+  Future didChangeAppLifecycleState(AppLifecycleState state) async {
+    if (!_hasPermission) return;
+    if (!_cameraController.value.isInitialized) return;
+    if (state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.paused) {
+      if (!_cameraController.value.isInitialized) {
+        return;
+      }
+      _cameraController.initialize();
+    } else if (state == AppLifecycleState.resumed) {
+      await initCamera();
+      setState(() {});
+    }
+  }
+
   Future<void> _toggleSelfieMode() async {
     _isSelfieMode = !_isSelfieMode;
     await initCamera();
@@ -85,6 +103,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
   }
 
   Future<void> _setFlashMode(FlashMode newFlashMode) async {
+    if (_isSelfieMode) return;
     await _cameraController.setFlashMode(newFlashMode);
     _flashMode = newFlashMode;
     setState(() {});
