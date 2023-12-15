@@ -18,6 +18,8 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     with TickerProviderStateMixin, WidgetsBindingObserver {
   bool _hasPermission = false;
   bool _isSelfieMode = false;
+  late final double maxZoom;
+  late double _currentZoom;
 
   late final AnimationController _buttonAnimationController =
       AnimationController(
@@ -47,6 +49,8 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     );
     await _cameraController.initialize();
     await _cameraController.prepareForVideoRecording();
+    maxZoom = await _cameraController.getMaxZoomLevel();
+    _currentZoom = await _cameraController.getMinZoomLevel();
     _flashMode = _cameraController.value.flashMode;
   }
 
@@ -109,7 +113,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     setState(() {});
   }
 
-  Future<void> _startRecording(TapDownDetails _) async {
+  Future<void> _startRecording() async {
     if (_cameraController.value.isRecordingVideo) {
       return;
     }
@@ -163,9 +167,33 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     );
   }
 
+  void _onCameraZoom(LongPressMoveUpdateDetails detail) async {
+    if (detail.offsetFromOrigin.direction > 0) {
+      if (_currentZoom - 0.2 >= 1.0) {
+        await _cameraController.setZoomLevel(_currentZoom - 0.2);
+        setState(() {
+          _currentZoom -= 0.2;
+        });
+      }
+    } else if (detail.offsetFromOrigin.direction < 0) {
+      if (_currentZoom + 0.2 <= maxZoom) {
+        await _cameraController.setZoomLevel(_currentZoom + 0.2);
+        setState(() {
+          _currentZoom += 0.2;
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ),
+        backgroundColor: Colors.black,
+      ),
       backgroundColor: Colors.black,
       body: SizedBox(
         width: MediaQuery.of(context).size.width,
@@ -188,13 +216,11 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
             : Stack(
                 alignment: Alignment.center,
                 children: [
-                  Center(
-                    child: CameraPreview(
-                      _cameraController,
-                    ),
+                  CameraPreview(
+                    _cameraController,
                   ),
                   Positioned(
-                    top: Sizes.size96,
+                    top: Sizes.size36,
                     right: Sizes.size12,
                     child: Column(
                       children: [
@@ -253,8 +279,10 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
                       children: [
                         const Spacer(),
                         GestureDetector(
-                          onTapDown: _startRecording,
+                          onTapDown: (detail) => _startRecording(),
                           onTapUp: (detail) => _stopRecording(),
+                          onLongPressEnd: (detail) => _stopRecording(),
+                          onLongPressMoveUpdate: _onCameraZoom,
                           child: ScaleTransition(
                             scale: _buttonAnimation,
                             child: Stack(
