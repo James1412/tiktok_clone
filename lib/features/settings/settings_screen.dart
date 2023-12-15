@@ -145,7 +145,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             },
           ),
           ListTile(
-            title: const Text("Log out (IOS/Bottom)"),
+            title: const Text("Log out (IOS / Bottom)"),
             textColor: Colors.red,
             onTap: () {
               showCupertinoModalPopup(
