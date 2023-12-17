@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/utilities.dart';
 
 class DiscoverSearchTab extends StatefulWidget {
   final TextEditingController controller;
@@ -51,7 +52,8 @@ class _DiscoverSearchTabState extends State<DiscoverSearchTab> {
             ),
             filled: true,
             contentPadding: const EdgeInsets.only(),
-            fillColor: Colors.grey.shade200,
+            fillColor:
+                isDarkMode(context) ? Colors.black : Colors.grey.shade200,
             hintText: "Search",
             prefixIcon: const Align(
               widthFactor: 1,

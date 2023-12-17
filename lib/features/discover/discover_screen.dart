@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/discover/widgets/search_tab.dart';
+import 'package:tiktok_clone/utilities.dart';
 
 final tabs = [
   "Top",
@@ -75,9 +76,6 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
             },
             tabAlignment: TabAlignment.start,
             isScrollable: true,
-            unselectedLabelColor: Colors.grey.shade500,
-            labelColor: Colors.black,
-            indicatorColor: Colors.black,
             indicatorSize: TabBarIndicatorSize.tab,
             labelStyle: const TextStyle(
               fontWeight: FontWeight.w600,
@@ -142,7 +140,9 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                       Gaps.v5,
                       DefaultTextStyle(
                         style: TextStyle(
-                          color: Colors.grey.shade600,
+                          color: isDarkMode(context)
+                              ? Colors.grey.shade400
+                              : Colors.grey.shade600,
                           fontWeight: FontWeight.bold,
                         ),
                         child: Row(
