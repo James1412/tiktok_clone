@@ -156,6 +156,7 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
     if (video == null) {
       return;
     }
+    if (!mounted) return;
     Navigator.push(
       context,
       MaterialPageRoute(
