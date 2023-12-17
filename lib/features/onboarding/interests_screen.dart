@@ -3,6 +3,7 @@ import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/onboarding/tutorial_screen.dart';
 import 'package:tiktok_clone/features/onboarding/widgets/interest_button.dart';
+import 'package:tiktok_clone/utilities.dart';
 
 List interests = [
   "Daily Life",
@@ -112,7 +113,9 @@ class _InterestsScreenState extends State<InterestsScreen> {
         title: AnimatedOpacity(
           opacity: _showTitle ? 1 : 0,
           duration: const Duration(milliseconds: 300),
-          child: const Text("Choose your interests"),
+          child: const Text(
+            "Choose your interests",
+          ),
         ),
       ),
       body: Scrollbar(
@@ -163,7 +166,7 @@ class _InterestsScreenState extends State<InterestsScreen> {
       ),
       bottomNavigationBar: BottomAppBar(
         elevation: 1,
-        color: Colors.white,
+        color: isDarkMode(context) ? null : Colors.white,
         height: Sizes.size96 + Sizes.size24,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

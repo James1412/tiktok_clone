@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:tiktok_clone/utilities.dart';
 
 import '../../../constants/sizes.dart';
 
@@ -42,7 +43,11 @@ class _InterestButtonState extends State<InterestButton> {
           border: Border.all(
             color: Colors.black.withOpacity(0.1),
           ),
-          color: _isSelected ? Theme.of(context).primaryColor : Colors.white,
+          color: _isSelected
+              ? Theme.of(context).primaryColor
+              : isDarkMode(context)
+                  ? Colors.grey.shade500
+                  : Colors.white,
           borderRadius: BorderRadius.circular(Sizes.size32),
           boxShadow: [
             BoxShadow(
