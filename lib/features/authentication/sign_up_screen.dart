@@ -5,6 +5,7 @@ import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/login_screen.dart';
 import 'package:tiktok_clone/features/authentication/username_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/auth_button.dart';
+import 'package:tiktok_clone/utilities.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
@@ -29,21 +30,22 @@ class SignUpScreen extends StatelessWidget {
           child: Column(
             children: [
               Gaps.v80,
-              const Text(
+              Text(
                 "Sign up for TikTok",
-                style: TextStyle(
-                  fontSize: Sizes.size24,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                      fontWeight: FontWeight.w900,
+                    ),
               ),
               Gaps.v20,
-              const Text(
-                "Create a profile, follow other accounts, make your own videos and more.",
-                style: TextStyle(
-                  fontSize: Sizes.size14,
-                  color: Colors.black45,
+              const Opacity(
+                opacity: 0.7,
+                child: Text(
+                  "Create a profile, follow other accounts, make your own videos and more.",
+                  style: TextStyle(
+                    fontSize: Sizes.size14,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
               ),
               Gaps.v40,
               AuthButton(
@@ -61,7 +63,6 @@ class SignUpScreen extends StatelessWidget {
       ),
       bottomNavigationBar: BottomAppBar(
         elevation: 2,
-        color: const Color(0xFFF6F8F8),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
