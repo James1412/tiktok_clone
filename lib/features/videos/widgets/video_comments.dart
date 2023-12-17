@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/utilities.dart';
 
 class VideoCommentsTab extends StatefulWidget {
   const VideoCommentsTab({super.key});
@@ -33,6 +34,7 @@ class _VideoCommentsTabState extends State<VideoCommentsTab> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = isDarkMode(context);
     final size = MediaQuery.of(context).size;
     return Container(
       height: size.height * 0.7,
@@ -43,9 +45,9 @@ class _VideoCommentsTabState extends State<VideoCommentsTab> {
         ),
       ),
       child: Scaffold(
-        backgroundColor: Colors.grey.shade50,
+        backgroundColor: isDark ? null : Colors.grey.shade50,
         appBar: AppBar(
-          backgroundColor: Colors.grey.shade50,
+          backgroundColor: isDark ? null : Colors.grey.shade50,
           automaticallyImplyLeading: false,
           title: const Text("22796 comments"),
           actions: [
@@ -126,7 +128,6 @@ class _VideoCommentsTabState extends State<VideoCommentsTab> {
                 bottom: 0,
                 width: size.width,
                 child: BottomAppBar(
-                  color: Colors.white,
                   surfaceTintColor: Colors.white,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
@@ -159,7 +160,9 @@ class _VideoCommentsTabState extends State<VideoCommentsTab> {
                                   borderSide: BorderSide.none,
                                 ),
                                 filled: true,
-                                fillColor: Colors.grey.shade100,
+                                fillColor: isDark
+                                    ? Colors.grey.shade800
+                                    : Colors.grey.shade100,
                                 contentPadding: const EdgeInsets.symmetric(
                                   horizontal: Sizes.size10,
                                 ),
@@ -174,17 +177,23 @@ class _VideoCommentsTabState extends State<VideoCommentsTab> {
                                     children: [
                                       FaIcon(
                                         FontAwesomeIcons.at,
-                                        color: Colors.grey.shade700,
+                                        color: isDark
+                                            ? Colors.grey.shade500
+                                            : Colors.grey.shade700,
                                       ),
                                       Gaps.h14,
                                       FaIcon(
                                         FontAwesomeIcons.gift,
-                                        color: Colors.grey.shade700,
+                                        color: isDark
+                                            ? Colors.grey.shade500
+                                            : Colors.grey.shade700,
                                       ),
                                       Gaps.h14,
                                       FaIcon(
                                         FontAwesomeIcons.faceSmile,
-                                        color: Colors.grey.shade700,
+                                        color: isDark
+                                            ? Colors.grey.shade500
+                                            : Colors.grey.shade700,
                                       ),
                                       Gaps.h14,
                                       if (_isWriting)
