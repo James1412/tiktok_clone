@@ -13,9 +13,22 @@ class SignUpScreen extends StatelessWidget {
   void _onEmailTap(BuildContext context) {
     Navigator.of(context).push(
       PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimatino) =>
-            const UsernameScreen(),
-      ),
+          transitionDuration: const Duration(seconds: 1),
+          reverseTransitionDuration: const Duration(seconds: 1),
+          pageBuilder: (context, animation, secondaryAnimatino) =>
+              const UsernameScreen(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            final offsetAnimation =
+                Tween(begin: const Offset(1, 0), end: Offset.zero)
+                    .animate(animation);
+            return SlideTransition(
+              position: offsetAnimation,
+              child: FadeTransition(
+                opacity: animation,
+                child: child,
+              ),
+            );
+          }),
     );
   }
 
