@@ -7,7 +7,8 @@ import 'package:tiktok_clone/features/users/widgets/persistent_tab_bar.dart';
 import 'package:tiktok_clone/features/users/widgets/user_detail.dart';
 
 class UserProfileScreen extends StatefulWidget {
-  const UserProfileScreen({super.key});
+  final String username;
+  const UserProfileScreen({super.key, required this.username});
 
   @override
   State<UserProfileScreen> createState() => _UserProfileScreenState();
@@ -41,9 +42,9 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                       ),
                     ),
                   ],
-                  title: const Text(
-                    'James',
-                    style: TextStyle(
+                  title: Text(
+                    widget.username,
+                    style: const TextStyle(
                       fontSize: Sizes.size18,
                     ),
                   ),
@@ -52,26 +53,26 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                   child: Column(
                     children: [
                       Gaps.v20,
-                      const CircleAvatar(
+                      CircleAvatar(
                         radius: 50,
-                        foregroundImage: NetworkImage(
+                        foregroundImage: const NetworkImage(
                           'https://avatars.githubusercontent.com/u/73318218?v=4',
                         ),
-                        child: Text("James"),
+                        child: Text(widget.username),
                       ),
                       Gaps.v14,
-                      const Row(
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "@jameslee",
-                            style: TextStyle(
+                            "@${widget.username}",
+                            style: const TextStyle(
                               fontSize: Sizes.size16,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
                           Gaps.h10,
-                          FaIcon(
+                          const FaIcon(
                             FontAwesomeIcons.solidCircleCheck,
                             color: Colors.blue,
                             size: Sizes.size14,
