@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/features/videos/widgets/video_button.dart';
-import 'package:tiktok_clone/features/videos/widgets/video_comments.dart';
+import 'package:tiktok_clone/features/videos/models/playback_config_model.dart';
+import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
+import 'package:tiktok_clone/features/videos/views/widgets/video_button.dart';
+import 'package:tiktok_clone/features/videos/views/widgets/video_comments.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -42,6 +45,16 @@ class _VideoPostState extends State<VideoPost>
     _videoPlayerController.addListener(_onVideoChange);
   }
 
+  void _onPlaybackConfigChanged() {
+    if (!mounted) return;
+    final muted = context.read<PlaybackConfigViewModel>().muted;
+    if (muted) {
+      _videoPlayerController.setVolume(0);
+    } else {
+      _videoPlayerController.setVolume(1);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -56,6 +69,10 @@ class _VideoPostState extends State<VideoPost>
     _animationController.addListener(() {
       setState(() {});
     });
+
+    context.read<PlaybackConfigViewModel>().addListener(
+          _onPlaybackConfigChanged,
+        );
   }
 
   @override
@@ -69,7 +86,10 @@ class _VideoPostState extends State<VideoPost>
     if (info.visibleFraction == 1 &&
         !_isPaused &&
         !_videoPlayerController.value.isPlaying) {
-      _videoPlayerController.play();
+      final autoplay = context.read<PlaybackConfigViewModel>().autoplay;
+      if (autoplay) {
+        _videoPlayerController.play();
+      }
     }
     if (_videoPlayerController.value.isPlaying && info.visibleFraction == 0) {
       _togglePause();
@@ -119,6 +139,23 @@ class _VideoPostState extends State<VideoPost>
           Positioned.fill(
             child: GestureDetector(
               onTap: _togglePause,
+            ),
+          ),
+          Positioned(
+            top: 40,
+            left: 20,
+            child: IconButton(
+              color: Colors.white,
+              icon: FaIcon(
+                context.watch<PlaybackConfigViewModel>().muted
+                    ? FontAwesomeIcons.volumeOff
+                    : FontAwesomeIcons.volumeHigh,
+              ),
+              onPressed: () {
+                context.read<PlaybackConfigViewModel>().setMuted(
+                      !context.read<PlaybackConfigViewModel>().muted,
+                    );
+              },
             ),
           ),
           Positioned.fill(
