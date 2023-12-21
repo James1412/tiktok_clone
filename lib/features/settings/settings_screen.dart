@@ -36,6 +36,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
           SwitchListTile.adaptive(
             value: _notification,
             onChanged: _onNotificationChanged,
+            title: const Text("Automute"),
+            subtitle: const Text("Disable sound as default"),
+          ),
+          SwitchListTile.adaptive(
+            value: _notification,
+            onChanged: _onNotificationChanged,
             title: const Text("enable notification"),
           ),
           CheckboxListTile(

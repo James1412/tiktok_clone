@@ -1,33 +1,37 @@
 import 'package:go_router/go_router.dart';
-import 'package:tiktok_clone/features/authentication/email_screen.dart';
 import 'package:tiktok_clone/features/authentication/login_screen.dart';
 import 'package:tiktok_clone/features/authentication/sign_up_screen.dart';
 import 'package:tiktok_clone/features/authentication/username_screen.dart';
+import 'package:tiktok_clone/features/main_navigation/main_navigation_screen.dart';
+import 'package:tiktok_clone/features/settings/settings_screen.dart';
 import 'package:tiktok_clone/features/users/user_profile_screen.dart';
 
 final router = GoRouter(
   routes: [
     GoRoute(
-      path: SignUpScreen.routeName,
-      builder: (context, state) => const SignUpScreen(),
+      path: '/',
+      builder: (context, state) => const MainNavigationScreen(),
     ),
     GoRoute(
-      path: UsernameScreen.routeName,
-      builder: (context, state) => const UsernameScreen(),
+      path: SignUpScreen.routeURL,
+      name: SignUpScreen.routeName,
+      builder: (context, state) => const SignUpScreen(),
+      routes: [
+        GoRoute(
+            path: UsernameScreen.routeURL,
+            name: UsernameScreen.routeName,
+            builder: (context, state) => const UsernameScreen(),
+            routes: const []),
+      ],
     ),
     GoRoute(
       path: LoginScreen.routeName,
       builder: (context, state) => const LoginScreen(),
     ),
     GoRoute(
-      path: EmailScreen.routeName,
-      builder: (context, state) => const EmailScreen(),
-    ),
-    GoRoute(
-      path: '/users/:username',
+      path: UserProfileScreen.routeName,
       builder: (context, state) {
-        final username = state.params['username'];
-        return UserProfileScreen(username: username!);
+        return const UserProfileScreen();
       },
     ),
   ],
