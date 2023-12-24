@@ -19,11 +19,6 @@ class DiscoverSearchTab extends StatefulWidget {
 
 class _DiscoverSearchTabState extends State<DiscoverSearchTab> {
   bool isXmark = false;
-  @override
-  void dispose() {
-    widget.controller.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
