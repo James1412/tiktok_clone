@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1025432062259",
+    "project_id": "tiktok-jatory",
+    "storage_bucket": "tiktok-jatory.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1025432062259:android:fc44fe87352c1ee6d71646",
+        "android_client_info": {
+          "package_name": "com.example.tiktok_clone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyO9C7k48bqSD23e_laItdUOUY4KXZKYk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
