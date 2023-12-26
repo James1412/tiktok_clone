@@ -5,7 +5,6 @@ import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/view_models/signup_view_model.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
-import 'package:tiktok_clone/features/onboarding/interests_screen.dart';
 
 class BirthdayScreen extends ConsumerStatefulWidget {
   const BirthdayScreen({super.key});
@@ -32,7 +31,7 @@ class BirthdayScreenState extends ConsumerState<BirthdayScreen> {
   }
 
   void _onNextTap(context) {
-    ref.read(signUpProvider.notifier).signUp();
+    ref.read(signUpProvider.notifier).signUp(context);
   }
 
   void _setTextFieldDate(DateTime date) {
@@ -109,9 +108,9 @@ class BirthdayScreenState extends ConsumerState<BirthdayScreen> {
             mode: CupertinoDatePickerMode.date,
             // User has to be at least 7 years old
             maximumDate: DateTime(
-                initialDate.year - 7, initialDate.month, initialDate.day),
+                initialDate.year - 7, initialDate.month, initialDate.day,),
             initialDateTime: DateTime(
-                initialDate.year - 7, initialDate.month, initialDate.day),
+                initialDate.year - 7, initialDate.month, initialDate.day,),
           ),
         ),
       ),

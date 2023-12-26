@@ -36,7 +36,7 @@ final routerProvider = Provider((ref) {
               path: UsernameScreen.routeName,
               name: UsernameScreen.routeURL,
               builder: (context, state) => const UsernameScreen(),
-              routes: const []),
+              routes: const [],),
         ],
       ),
       GoRoute(

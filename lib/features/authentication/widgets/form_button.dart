@@ -10,7 +10,7 @@ class FormButton extends StatelessWidget {
       {super.key,
       required this.disabled,
       required this.onTapFunction,
-      required this.text});
+      required this.text,});
 
   @override
   Widget build(BuildContext context) {

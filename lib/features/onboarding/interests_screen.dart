@@ -90,7 +90,7 @@ class _InterestsScreenState extends State<InterestsScreen> {
   void _onNextTap() {
     if (_selection >= 3) {
       Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => const TutorialScreen()));
+          MaterialPageRoute(builder: (context) => const TutorialScreen()),);
     }
   }
 
@@ -199,7 +199,7 @@ class _InterestsScreenState extends State<InterestsScreen> {
             Gaps.v10,
             Text(_selection >= 3
                 ? "Great Work 🎉🎉🎉"
-                : "Choose at least three interests $_selection/3"),
+                : "Choose at least three interests $_selection/3",),
           ],
         ),
       ),

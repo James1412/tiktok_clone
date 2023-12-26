@@ -54,7 +54,7 @@ class _InterestButtonState extends State<InterestButton> {
               color: Colors.black.withOpacity(0.05),
               blurRadius: 5,
               spreadRadius: 5,
-            )
+            ),
           ],
         ),
         child: Text(

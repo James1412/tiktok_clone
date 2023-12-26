@@ -11,7 +11,7 @@ class DiscoverSearchTab extends StatefulWidget {
       {super.key,
       required this.controller,
       required this.onChanged,
-      required this.onSubmitted});
+      required this.onSubmitted,});
 
   @override
   State<DiscoverSearchTab> createState() => _DiscoverSearchTabState();
@@ -74,7 +74,7 @@ class _DiscoverSearchTabState extends State<DiscoverSearchTab> {
                   ),
                 ),
               ),
-            )),
+            ),),
       ),
     );
   }

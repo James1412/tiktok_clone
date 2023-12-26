@@ -70,7 +70,7 @@ class InboxScreen extends StatelessWidget {
                   FontAwesomeIcons.users,
                   size: Sizes.size24,
                   color: Colors.white,
-                )),
+                ),),
               ),
             ),
             title: const Text(

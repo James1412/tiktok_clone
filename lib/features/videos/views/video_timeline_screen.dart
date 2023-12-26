@@ -69,7 +69,7 @@ class VideoTimeLineScreenState extends ConsumerState<VideoTimeLineScreen> {
               itemCount: videos.length,
               itemBuilder: (context, index) {
                 return VideoPost(
-                    onVideoFinished: _onVideoFinished, index: index);
+                    onVideoFinished: _onVideoFinished, index: index,);
               },
             ),
           ),

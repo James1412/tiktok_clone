@@ -46,7 +46,7 @@ class EmailScreenState extends ConsumerState<EmailScreen> {
       return null;
     } else {
       final regExp = RegExp(
-          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+",);
       if (!regExp.hasMatch(_email)) {
         return "Email not valid";
       }

@@ -156,6 +156,9 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
 
   @override
   void dispose() {
+    if (_noCamera) {
+      return;
+    }
     _cameraController.dispose();
     _buttonAnimationController.dispose();
     _progressAnimationController.dispose();
@@ -163,9 +166,10 @@ class _VideoRecordingScreenState extends State<VideoRecordingScreen>
   }
 
   Future<void> _onPickVideoPressed() async {
-    final video = await ImagePicker().pickVideo(
+    final XFile? video = await ImagePicker().pickVideo(
       source: ImageSource.gallery,
     );
+
     if (video == null) {
       return;
     }
