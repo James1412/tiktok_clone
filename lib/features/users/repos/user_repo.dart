@@ -9,6 +9,11 @@ class UserRepository {
   Future<void> createProfile(UserProfileModel user) async {
     await _db.collection('users').doc(user.uid).set(user.toJson());
   }
+
+  Future<Map<String, dynamic>?> findProfile(String uid) async {
+    final doc = await _db.collection("users").doc(uid).get();
+    return doc.data();
+  }
   // Get profile
 }
 
