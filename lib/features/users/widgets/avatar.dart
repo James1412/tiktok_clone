@@ -6,11 +6,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:tiktok_clone/features/users/view_models/avatar_view_model.dart';
 
 class Avatar extends ConsumerWidget {
-  const Avatar(
-      {required this.uid,
-      required this.hasAvatar,
-      required this.name,
-      super.key});
+  const Avatar({
+    required this.uid,
+    required this.hasAvatar,
+    required this.name,
+    super.key,
+  });
 
   final String name;
   final bool hasAvatar;
@@ -48,7 +49,7 @@ class Avatar extends ConsumerWidget {
               radius: 50,
               foregroundImage: hasAvatar
                   ? NetworkImage(
-                      'https://firebasestorage.googleapis.com/v0/b/tiktok-jatory.appspot.com/o/avatars%2F$uid?alt=media&token=85b9870c-f9d9-40e3-bb0e-55194498be89 ',
+                      'https://firebasestorage.googleapis.com/v0/b/tiktok-jatory.appspot.com/o/avatars%2F$uid?alt=media&&haha=${DateTime.now().toString()}',
                     )
                   : null,
               child: Text(name),

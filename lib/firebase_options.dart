@@ -65,10 +65,10 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBCcPWk1JDoFz_I9k2BxbtS3PmpiVOSTSs',
-    appId: '1:1025432062259:ios:f1a28556af993834d71646',
+    appId: '1:1025432062259:ios:f22c30c0029872add71646',
     messagingSenderId: '1025432062259',
     projectId: 'tiktok-jatory',
     storageBucket: 'tiktok-jatory.appspot.com',
-    iosBundleId: 'com.tistory.jastory.tiktokClonee',
+    iosBundleId: 'com.tistory.jastory.tiktokClone',
   );
 }
