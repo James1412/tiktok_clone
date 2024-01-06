@@ -38,8 +38,8 @@ class VideoRepository {
 
   Future<void> likeVideo(String videoId, String userId) async {
     await _db.collection('likes').add({
-      videoId: videoId,
-      userId: userId,
+      "videoId": videoId,
+      "userId": userId,
     });
   }
 }
