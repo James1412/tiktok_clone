@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
+import 'package:tiktok_clone/features/videos/models/video_model.dart';
 import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/video_button.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/video_comments.dart';
@@ -10,10 +11,15 @@ import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class VideoPost extends ConsumerStatefulWidget {
-  const VideoPost(
-      {super.key, required this.onVideoFinished, required this.index,});
+  const VideoPost({
+    super.key,
+    required this.videoData,
+    required this.onVideoFinished,
+    required this.index,
+  });
   final int index;
   final Function onVideoFinished;
+  final VideoModel videoData;
 
   @override
   VideoPostState createState() => VideoPostState();
@@ -180,49 +186,57 @@ class VideoPostState extends ConsumerState<VideoPost>
           Positioned(
             bottom: 50,
             left: 20,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "@지강",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: Sizes.size16,
-                  ),
-                ),
-                Gaps.v8,
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      _seeMore
-                          ? "This is nomadcoders lecture video\nThis is nomadcoders lecture video\nThis is nomadcoders lecture video\n"
-                          : "This is nomadcoders",
-                      style: const TextStyle(
-                        fontSize: Sizes.size12,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.white,
-                      ),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "@${widget.videoData.creator}",
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: Sizes.size16,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          _seeMore = !_seeMore;
-                        });
-                      },
-                      child: Text(
-                        _seeMore ? "See less" : "... See more",
-                        style: const TextStyle(
-                          fontSize: Sizes.size12,
-                          fontWeight: FontWeight.normal,
-                          color: Colors.white,
+                  ),
+                  Gaps.v8,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        child: Text(
+                          widget.videoData.description,
+                          style: const TextStyle(
+                            fontSize: Sizes.size14,
+                            color: Colors.white,
+                          ),
+                          maxLines: _seeMore
+                              ? widget.videoData.description.length
+                              : null,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                      if (widget.videoData.description.length > 30)
+                        GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _seeMore = !_seeMore;
+                            });
+                          },
+                          child: Text(
+                            _seeMore ? "See less" : "See more",
+                            style: const TextStyle(
+                              fontSize: Sizes.size12,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           Positioned(

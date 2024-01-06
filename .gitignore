@@ -21,6 +21,7 @@ migrate_working_dir/
 # is commented out by default.
 #.vscode/
 
+
 # Flutter/Dart/Pub related
 **/doc/api/
 **/ios/Flutter/.last_build_id
@@ -42,3 +43,10 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+
+echo "
+# flutterfire
+lib/firebase_options.dart
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist" >> .gitignore
