@@ -5,6 +5,7 @@ import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/videos/models/video_model.dart';
 import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
+import 'package:tiktok_clone/features/videos/view_models/video_post_view_model.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/video_button.dart';
 import 'package:tiktok_clone/features/videos/views/widgets/video_comments.dart';
 import 'package:video_player/video_player.dart';
@@ -121,6 +122,10 @@ class VideoPostState extends ConsumerState<VideoPost>
     _togglePause();
   }
 
+  void _onLikeTap() {
+    ref.read(videoPostProvider(widget.videoData.id).notifier).likeVideo();
+  }
+
   @override
   Widget build(BuildContext context) {
     return VisibilityDetector(
@@ -131,8 +136,9 @@ class VideoPostState extends ConsumerState<VideoPost>
           Positioned.fill(
             child: _videoPlayerController.value.isInitialized
                 ? VideoPlayer(_videoPlayerController)
-                : Container(
-                    color: Colors.black,
+                : Image.network(
+                    widget.videoData.thumbnailUrl,
+                    fit: BoxFit.cover,
                   ),
           ),
           Positioned.fill(
@@ -244,28 +250,32 @@ class VideoPostState extends ConsumerState<VideoPost>
             right: 10,
             child: Column(
               children: [
+                // User profile image with creatorUid
                 CircleAvatar(
                   backgroundColor: Theme.of(context).primaryColor,
-                  radius: 20,
+                  radius: 25,
                   foregroundColor: Colors.white,
-                  foregroundImage: const NetworkImage(
-                    "https://avatars.githubusercontent.com/u/73318218?v=4",
+                  foregroundImage: NetworkImage(
+                    'https://firebasestorage.googleapis.com/v0/b/tiktok-jatory.appspot.com/o/avatars%2F${widget.videoData.creatorUid}?alt=media&&haha=${DateTime.now().toString()}',
                   ),
-                  child: const Text(
-                    "지강",
+                  child: Text(
+                    widget.videoData.creator,
                   ),
                 ),
                 Gaps.v32,
-                const VideoButton(
-                  icon: FontAwesomeIcons.solidHeart,
-                  text: "2.9M",
+                GestureDetector(
+                  onTap: _onLikeTap,
+                  child: VideoButton(
+                    icon: FontAwesomeIcons.solidHeart,
+                    text: widget.videoData.likes.toString(),
+                  ),
                 ),
                 Gaps.v20,
                 GestureDetector(
                   onTap: () => _onCommentsTap(context),
-                  child: const VideoButton(
+                  child: VideoButton(
                     icon: FontAwesomeIcons.solidComment,
-                    text: "33K",
+                    text: widget.videoData.comments.toString(),
                   ),
                 ),
                 Gaps.v20,
